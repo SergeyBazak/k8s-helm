@@ -66,6 +66,9 @@ var (
 
 // ValidName is a regular expression for resource names.
 //
+// DEPRECATED: This will be removed in Helm 4, and is no longer used here. See
+// pkg/chartutil.ValidateName for the replacement.
+//
 // According to the Kubernetes help text, the regular expression it uses is:
 //
 //	[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*
@@ -294,7 +297,7 @@ func (c *Configuration) Now() time.Time {
 }
 
 func (c *Configuration) releaseContent(name string, version int) (*release.Release, error) {
-	if err := validateReleaseName(name); err != nil {
+	if err := chartutil.ValidateReleaseName(name); err != nil {
 		return nil, errors.Errorf("releaseContent: Release name is invalid: %s", name)
 	}
 

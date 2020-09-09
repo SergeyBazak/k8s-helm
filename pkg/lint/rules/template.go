@@ -199,10 +199,10 @@ func validateMetadataName(obj *K8sYamlStruct) error {
 	}
 	// This will return an error if the characters do not abide by the standard OR if the
 	// name is left empty.
-	if validName.MatchString(obj.Metadata.Name) {
-		return nil
+	if err := chartutil.ValidateMetadataName(obj.Metadata.Name); err != nil {
+		return errors.Wrapf(err, "object name does not conform to Kubernetes naming requirements: %q", obj.Metadata.Name)
 	}
-	return fmt.Errorf("object name does not conform to Kubernetes naming requirements: %q", obj.Metadata.Name)
+	return nil
 }
 
 func validateNoCRDHooks(manifest []byte) error {
