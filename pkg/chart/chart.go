@@ -118,6 +118,9 @@ func (ch *Chart) ChartFullPath() string {
 
 // Validate validates the metadata.
 func (ch *Chart) Validate() error {
+	if ch.Metadata == nil {
+		return ValidationError("no Chart.yaml data was found in this chart")
+	}
 	return ch.Metadata.Validate()
 }
 

@@ -97,6 +97,17 @@ func TestMetadata(t *testing.T) {
 	is.Equal(nil, chrt.Validate())
 }
 
+// TestValidate_NoChartYAML is a regression test to check
+// the error message that comes back when a chart has no
+// metadata.
+func TestValidate_NoChartYAML(t *testing.T) {
+	chrt := Chart{}
+	err := chrt.Validate()
+
+	expect := "validation: no Chart.yaml data was found in this chart"
+	assert.Equal(t, expect, err.Error())
+}
+
 func TestIsRoot(t *testing.T) {
 	chrt1 := Chart{
 		parent: &Chart{
